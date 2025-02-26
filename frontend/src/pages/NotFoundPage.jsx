@@ -1,14 +1,14 @@
 const NotFound = () => {
   return (
-    <section>
-      <div className=" h-screen text-white">
+    <section className="pt-[20rem]">
+      <div className="h-screen text-white">
         <div className="flex ">
           <div className="m-auto text-center">
             <div>
               <img src="/404.svg" alt="404" />
             </div>
             <p className="text-sm md:text-base text-[#F6009B] p-2 mb-4">
-              The stuff you were looking for doesn't exist
+              The stuff you were looking for doesn&rsquo;t exist
             </p>
             <a
               href="/"
