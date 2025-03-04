@@ -9,5 +9,6 @@ const GET_AUTHENTICATED_USER = gql`
     }
   }
 `;
+
 export { GET_AUTHENTICATED_USER };
 // Compare this snippet from backend/routes/user.routes.js:
