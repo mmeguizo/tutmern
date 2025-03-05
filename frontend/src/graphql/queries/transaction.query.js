@@ -28,5 +28,14 @@ const GET_TRANSACTION = gql`
   }
 `;
 
-export { GET_TRANSACTIONS, GET_TRANSACTION };
+const GET_TRANSACTION_STATISTICS = gql`
+  query GetTransactionStatistics {
+    categoryStatistics {
+      category
+      totalAmount
+    }
+  }
+`;
+
+export { GET_TRANSACTIONS, GET_TRANSACTION, GET_TRANSACTION_STATISTICS };
 // Compare this snippet from backend/routes/transaction.routes.js:

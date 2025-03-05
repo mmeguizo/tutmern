@@ -18,6 +18,8 @@ type Query {
     transaction(transactionId: ID!): Transaction
     userTransactions(userId: ID!): [Transaction!]
     # TODO add category statistics resolver
+    categoryStatistics: [CategoryStatistics!]
+
 }
 
 type Mutation {

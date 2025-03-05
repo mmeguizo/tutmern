@@ -11,8 +11,10 @@ import {
   formatCurrency,
 } from "../utils/generalUtil";
 import toast from "react-hot-toast";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
+
 const categoryColorMap = {
   saving: "from-green-700 to-green-400",
   expense: "from-pink-800 to-pink-600",
@@ -23,6 +25,9 @@ const categoryColorMap = {
 const Card = ({ transaction }) => {
   const { category, amount, date, description, location, paymentType, _id } =
     transaction;
+
+  const { data } = useQuery(GET_AUTHENTICATED_USER);
+  const { profilePic } = data?.authUser ?? "";
 
   const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
     refetchQueries: ["GetTransactions"],
@@ -88,7 +93,7 @@ const Card = ({ transaction }) => {
         <div className="flex justify-between items-center">
           <p className="text-xs text-black font-bold">{formatDate(date)}</p>
           <img
-            src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+            src={profilePic}
             className="h-8 w-8 border rounded-full"
             alt=""
           />

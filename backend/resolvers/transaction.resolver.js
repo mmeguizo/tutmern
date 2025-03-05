@@ -37,6 +37,40 @@ const transactionResolver = {
       }
     },
     // TODO add category statistics resolver
+    categoryStatistics: async (_, __, context) => {
+      console.log("categoryStatistics: ", context);
+
+      if (!context.isAuthenticated()) {
+        throw new Error("Unauthorized");
+      }
+      const userId = context.getUser()._id;
+      const transactions = await Transaction.find({
+        userId,
+        isDeleted: false,
+      });
+      console.log("transactions: ", transactions);
+
+      const categoryMap = {};
+
+      transactions.forEach((transaction) => {
+        if (!categoryMap[transaction.category]) {
+          categoryMap[transaction.category] = 0;
+        }
+        categoryMap[transaction.category] += transaction.amount;
+      });
+
+      // const categoryStatistics = transactions.reduce((acc, transaction) => {
+      //   if (!acc[transaction.category]) {
+      //     acc[transaction.category] = 0;
+      //   }
+      //   acc[transaction.category] += transaction.amount;
+      //   return acc;
+      // }, {});
+      return Object.entries(categoryMap).map(([category, totalAmount]) => ({
+        category,
+        totalAmount,
+      }));
+    },
   },
   Mutation: {
     createTransaction: async (_, { input }, context) => {
