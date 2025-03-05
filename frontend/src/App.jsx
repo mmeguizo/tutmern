@@ -8,9 +8,13 @@ import Header from "./components/ui/Header";
 import { useQuery } from "@apollo/client";
 import { GET_AUTHENTICATED_USER } from "./graphql/queries/user.query";
 import { Toaster } from "react-hot-toast";
+import LoadingSpinner from "./components/ui/LoadingSpinner";
+
 function App() {
-  const { data } = useQuery(GET_AUTHENTICATED_USER);
-  console.log("data", data);
+  const { data, loading } = useQuery(GET_AUTHENTICATED_USER);
+
+  // prevents
+  if (loading) return <LoadingSpinner />;
 
   return (
     <main>

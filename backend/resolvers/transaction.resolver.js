@@ -8,7 +8,10 @@ const transactionResolver = {
           throw new Error("Unauthorized");
         }
         const userId = context.getUser()._id;
-        const transactions = await Transaction.find({ userId });
+        const transactions = await Transaction.find({
+          userId,
+          isDeleted: false,
+        }).sort({ date: -1 });
         return transactions;
       } catch (error) {
         console.error("Error fetching transactions, error: ", error);
@@ -73,12 +76,13 @@ const transactionResolver = {
       }
     },
 
-    deleteTransaction: async (_, { input }, context) => {
+    deleteTransaction: async (_, { transactionId }, context) => {
+      console.log("input: ", transactionId);
+
       try {
         if (!context.isAuthenticated()) {
           throw new Error("Unauthorized");
         }
-        const { transactionId } = input;
         // const userId = context.getUser()._id;
         const deletedTransaction = await Transaction.findOneAndUpdate(
           { _id: transactionId },
